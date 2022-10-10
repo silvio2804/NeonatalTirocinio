@@ -1,5 +1,8 @@
 package com.example.neoproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +14,7 @@ public class Observationtemp {
     @MapsId("idsensore")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idsensore", nullable = false)
+    @JsonBackReference
     private Sensore idsensore;
 
     @Column(name = "temperatura", nullable = false)
