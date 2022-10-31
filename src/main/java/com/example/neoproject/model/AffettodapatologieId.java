@@ -14,7 +14,7 @@ public class AffettodapatologieId implements Serializable {
     private static final long serialVersionUID = -3323429408190199729L;
     @Column(name = "idneonato", nullable = false)
     private Integer idneonato;
-
+    @Lob
     @Column(name = "nomepatologia", nullable = false)
     private String nomepatologia;
 

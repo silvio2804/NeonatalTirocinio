@@ -1,6 +1,8 @@
 package com.example.neoproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "postoletto")
 public class Postoletto {
@@ -18,57 +21,22 @@ public class Postoletto {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nomereparto")
+    @JsonBackReference
     private Reparto nomereparto;
 
-    @OneToMany(mappedBy = "idpostoletto")
+    @OneToMany(mappedBy = "idpostoletto",cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Neonato> neonatoes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "idpostoletto")
+    @OneToMany(mappedBy = "idpostoletto",cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Sensoretemp> sensoretemps = new ArrayList<>();
+
+    @OneToMany(mappedBy = "idpostoletto",cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Sensoreecg> sensoreecgs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "idpostoletto",cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Dashboard> dashboards = new ArrayList<>();
-
-    @OneToMany(mappedBy = "idpostoletto")
-    @JsonManagedReference
-    private List<Sensore> sensores = new ArrayList<>();
-
-    public List<Sensore> getSensores() {
-        return sensores;
-    }
-
-    public void setSensores(List<Sensore> sensores) {
-        this.sensores = sensores;
-    }
-
-    public List<Dashboard> getDashboards() {
-        return dashboards;
-    }
-
-    public void setDashboards(List<Dashboard> dashboards) {
-        this.dashboards = dashboards;
-    }
-
-    public List<Neonato> getNeonatoes() {
-        return neonatoes;
-    }
-
-    public void setNeonatoes(List<Neonato> neonatoes) {
-        this.neonatoes = neonatoes;
-    }
-
-    public Reparto getNomereparto() {
-        return nomereparto;
-    }
-
-    public void setNomereparto(Reparto nomereparto) {
-        this.nomereparto = nomereparto;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

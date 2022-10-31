@@ -1,6 +1,7 @@
 package com.example.neoproject.service;
 import com.example.neoproject.exception.NeonatoNotFoundException;
-import com.example.neoproject.exception.SensoreNotFoundException;
+import com.example.neoproject.exception.PostolettoNotFoundException;
+import com.example.neoproject.exception.RepartoNotFoundException;
 import com.example.neoproject.model.Neonato;
 import com.example.neoproject.model.Postoletto;
 import com.example.neoproject.model.Reparto;
@@ -24,12 +25,13 @@ public class PostoLettoService {
     @Autowired
     private NeonatoRepository neonatoRepository;
 
-    //modificare reparto
     public Postoletto addPostoLetto(String nomeReparto){
-        Postoletto postoletto = new Postoletto();
-        Reparto r = new Reparto();
-        r.setId(nomeReparto);
-        return postolettoRepository.save(postoletto);
+        if(!repartoRepository.existsById(nomeReparto))
+            throw new RepartoNotFoundException(nomeReparto);
+        Postoletto p = new Postoletto();
+        Reparto r = repartoRepository.findRepartoById(nomeReparto);
+        p.setNomereparto(r);
+        return postolettoRepository.save(p);
     }
 
     public List <Postoletto> findAllPostiLetto(){
@@ -44,7 +46,7 @@ public class PostoLettoService {
 
     public Postoletto findPostolettoById(Integer id){
         if(!postolettoRepository.existsById(id))
-            throw new SensoreNotFoundException(id);
+            throw new PostolettoNotFoundException(id);
         return postolettoRepository.findPostolettoById(id);
     }
 }

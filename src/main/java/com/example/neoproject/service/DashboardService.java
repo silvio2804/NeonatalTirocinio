@@ -1,17 +1,18 @@
 package com.example.neoproject.service;
 import com.example.neoproject.exception.DashboardException;
 import com.example.neoproject.exception.PostolettoNotFoundException;
+import com.example.neoproject.exception.SensoreNotFoundException;
+import com.example.neoproject.jsonRequest.DashboardRequest;
 import com.example.neoproject.model.*;
 import com.example.neoproject.repository.DashboardRepository;
 import com.example.neoproject.repository.PostolettoRepository;
-import com.example.neoproject.repository.SensoreRepository;
+import com.example.neoproject.repository.SensoreEcgRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class DashboardService {
@@ -20,18 +21,30 @@ public class DashboardService {
     private DashboardRepository dashboardRepository;
     @Autowired
     private PostolettoRepository postolettoRepository;
+
     @Autowired
-    private SensoreRepository sensoreRepository;
+    private SensoreEcgRepository sensoreEcgRepository;
 
     private Dashboard dashboard;
 
-    public Dashboard createDashboard(Integer idPostoLetto){
+    //precondizioni (il posto letto gia esiste)
+    //associo i sensori al posto letto e al sensore gli observation (fatto in Sensore service)
+    /*public Dashboard createDashboard(DashboardRequest dR, HttpStatus ok){
         dashboard = new Dashboard();
-        if(!postolettoRepository.existsById(idPostoLetto))
-            throw new PostolettoNotFoundException(idPostoLetto);
-        Postoletto postoletto = postolettoRepository.findPostolettoById(idPostoLetto);
+        if(!postolettoRepository.existsById(dR.getIdPostoletto()))
+            throw new PostolettoNotFoundException(dR.getIdPostoletto());
+        Postoletto postoletto = postolettoRepository.findPostolettoById(dR.getIdPostoletto());
         dashboard.setIdpostoletto(postoletto);
-        List <Sensore> sensores = sensoreRepository.findSensoreByIdpostoletto(postoletto);
+        if(!sensoreEcgRepository.existsByTipologia(dR.getTipoSensore()))
+            throw new SensoreNotFoundException(dR.getTipoSensore());
+        Sensore s = new Sensore();
+        s.setTipologia(dR.getTipoSensore());
+        s.setDimensione(dR.getDimensione());
+        s.setPosizione(dR.getPosizione());
+        s.setIdpostoletto(postoletto);
+        List <Sensore> sensores = new ArrayList<>();
+        sensores.add(s);
+        for(Sensore sens: sensores) sens.setIddashboard(dashboard);
         dashboard.setSensores(sensores);
         return dashboardRepository.save(dashboard);
     }
@@ -42,14 +55,13 @@ public class DashboardService {
         Postoletto postoletto = postolettoRepository.findPostolettoById(idPostoletto);
         return dashboardRepository.findDashboardByIdpostoletto(postoletto);
     }
-
+//aggiunta di un nuovo sensore
     public Dashboard updateDashboard(Integer idDashboard, Dashboard reqDashboard){
         if(!dashboardRepository.existsById(idDashboard))
             throw new DashboardException(idDashboard);
         this.dashboard.setSensores(reqDashboard.getSensores());
         this.dashboard.setIdpostoletto(reqDashboard.getIdpostoletto());
         return dashboardRepository.save(dashboard);
-    }
-
+    }*/
 
 }

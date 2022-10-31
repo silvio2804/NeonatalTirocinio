@@ -1,11 +1,18 @@
 package com.example.neoproject.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "neonato")
 public class Neonato {
@@ -29,7 +36,7 @@ public class Neonato {
     @Column(name = "eta_gestazionale", nullable = false)
     private Integer etaGestazionale;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false) //molti neonati a un posto letto
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.ALL)
     @JoinColumn(name = "idpostoletto", nullable = false)
     @JsonBackReference
     private Postoletto idpostoletto;
@@ -40,75 +47,10 @@ public class Neonato {
     @Column(name = "datafinericovero")
     private LocalDate datafinericovero;
 
-    public LocalDate getDatafinericovero() {
-        return datafinericovero;
-    }
+    @ManyToMany
+    @JoinTable(name = "affettodapatologie",
+            joinColumns = @JoinColumn(name = "idneonato"),
+            inverseJoinColumns = @JoinColumn(name = "nomepatologia"))
+    private List<Patologia> patologias = new ArrayList<>();
 
-    public void setDatafinericovero(LocalDate datafinericovero) {
-        this.datafinericovero = datafinericovero;
-    }
-
-    public LocalDate getDatainizioricovero() {
-        return datainizioricovero;
-    }
-
-    public void setDatainizioricovero(LocalDate datainizioricovero) {
-        this.datainizioricovero = datainizioricovero;
-    }
-
-    public Postoletto getIdpostoletto() {
-        return idpostoletto;
-    }
-
-    public void setIdpostoletto(Postoletto idpostoletto) {
-        this.idpostoletto = idpostoletto;
-    }
-
-    public Integer getEtaGestazionale() {
-        return etaGestazionale;
-    }
-
-    public void setEtaGestazionale(Integer etaGestazionale) {
-        this.etaGestazionale = etaGestazionale;
-    }
-
-    public Double getPeso() {
-        return peso;
-    }
-
-    public void setPeso(Double peso) {
-        this.peso = peso;
-    }
-
-    public LocalDate getDataNa() {
-        return dataNa;
-    }
-
-    public void setDataNa(LocalDate dataNa) {
-        this.dataNa = dataNa;
-    }
-
-    public String getCognome() {
-        return cognome;
-    }
-
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

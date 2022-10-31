@@ -2,10 +2,11 @@ package com.example.neoproject.service;
 import com.example.neoproject.exception.SensoreNotFoundException;
 import com.example.neoproject.model.Observationecg;
 import com.example.neoproject.model.Observationtemp;
-import com.example.neoproject.model.Sensore;
+import com.example.neoproject.model.Sensoreecg;
+import com.example.neoproject.model.Sensoretemp;
 import com.example.neoproject.repository.ObservationecgRepository;
 import com.example.neoproject.repository.ObservationtempRepository;
-import com.example.neoproject.repository.SensoreRepository;
+import com.example.neoproject.repository.SensoreEcgRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,16 +22,16 @@ public class ObservationService {
     private ObservationtempRepository observationtempRepository;
 
     @Autowired
-    private SensoreRepository sensoreRepository;
+    private SensoreEcgRepository sensoreEcgRepository;
 
-    public List <Observationtemp> findObservationTempByIdSensore(Sensore sensore){
-        if(!sensoreRepository.existsById(sensore.getId()))
+    public List <Observationtemp> findObservationTempByIdSensore(Sensoretemp sensore){
+        if(!sensoreEcgRepository.existsById(sensore.getId()))
             throw new SensoreNotFoundException(sensore.getId());
         return observationtempRepository.findObservationtempByIdsensore(sensore);
     }
 
-    public List <Observationecg> findObservationEgcByIdSensore(Sensore sensore){
-        if(!sensoreRepository.existsById(sensore.getId()))
+    public List <Observationecg> findObservationEgcByIdSensore(Sensoreecg sensore){
+        if(!sensoreEcgRepository.existsById(sensore.getId()))
             throw new SensoreNotFoundException(sensore.getId());
         return observationecgRepository.findObservationecgByIdsensore(sensore);
     }

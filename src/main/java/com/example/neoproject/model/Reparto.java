@@ -1,7 +1,15 @@
 package com.example.neoproject.model;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
+@Data
 @Entity
 @Table(name = "reparto")
 public class Reparto {
@@ -15,27 +23,7 @@ public class Reparto {
     @Column(name = "livello", nullable = false)
     private Integer livello;
 
-    public Integer getLivello() {
-        return livello;
-    }
-
-    public void setLivello(Integer livello) {
-        this.livello = livello;
-    }
-
-    public String getOspedale() {
-        return ospedale;
-    }
-
-    public void setOspedale(String ospedale) {
-        this.ospedale = ospedale;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy = "nomereparto",cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Postoletto> postolettos = new ArrayList<>();
 }

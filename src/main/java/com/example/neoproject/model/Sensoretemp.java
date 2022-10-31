@@ -12,19 +12,26 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "dashboard")
-public class Dashboard {
+@Table(name = "sensoretemp")
+public class Sensoretemp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
+
+    @Column(name = "modello")
+    private String modello;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idpostoletto", nullable = false)
     @JsonBackReference
     private Postoletto idpostoletto;
 
-    @OneToMany(mappedBy = "iddashboard", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "idsensore",cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Widget> widgets = new ArrayList<>();
+    private List<Observationtemp> observationtemps = new ArrayList<>();
+
+    public List<Observationtemp> getObservationtemps() {
+        return observationtemps;
+    }
 }

@@ -1,10 +1,11 @@
 package com.example.neoproject.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "affettodapatologie")
 public class Affettodapatologie {
@@ -22,27 +23,4 @@ public class Affettodapatologie {
     @JsonBackReference
     private Patologia nomepatologia;
 
-    public Patologia getNomepatologia() {
-        return nomepatologia;
-    }
-
-    public void setNomepatologia(Patologia nomepatologia) {
-        this.nomepatologia = nomepatologia;
-    }
-
-    public Neonato getIdneonato() {
-        return idneonato;
-    }
-
-    public void setIdneonato(Neonato idneonato) {
-        this.idneonato = idneonato;
-    }
-
-    public AffettodapatologieId getId() {
-        return id;
-    }
-
-    public void setId(AffettodapatologieId id) {
-        this.id = id;
-    }
 }
