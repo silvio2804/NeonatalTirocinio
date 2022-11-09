@@ -14,26 +14,18 @@ public class Widget {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "iddashboard")
+    @Column(name = "dimensione")
+    private Double dimensione;
+
+    @Column(name = "posizione")
+    private Double posizione;
+
+    @Column(name = "testo")
+    private String testo;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "iddashboard", nullable = false)
     @JsonBackReference
     private Dashboard iddashboard;
 
-    public Dashboard getIddashboard() {
-        return iddashboard;
-    }
-
-    public void setIddashboard(Dashboard iddashboard) {
-        this.iddashboard = iddashboard;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    //TODO Reverse Engineering! Migrate other columns to the entity
 }

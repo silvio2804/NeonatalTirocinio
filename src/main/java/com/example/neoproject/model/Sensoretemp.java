@@ -30,8 +30,4 @@ public class Sensoretemp {
     @OneToMany(mappedBy = "idsensore",cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Observationtemp> observationtemps = new ArrayList<>();
-
-    public List<Observationtemp> getObservationtemps() {
-        return observationtemps;
-    }
 }

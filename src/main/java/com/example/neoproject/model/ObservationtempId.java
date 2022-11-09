@@ -1,5 +1,6 @@
 package com.example.neoproject.model;
 
+import lombok.Data;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class ObservationtempId implements Serializable {
     private static final long serialVersionUID = 2198908211493412444L;
@@ -17,33 +19,11 @@ public class ObservationtempId implements Serializable {
     @Column(name = "idsensore", nullable = false)
     private Integer idsensore;
 
-    public Integer getIdsensore() {
-        return idsensore;
+    public ObservationtempId (){
     }
 
-    public void setIdsensore(Integer idsensore) {
-        this.idsensore = idsensore;
-    }
-
-    public Instant getDataRilevazione() {
-        return dataRilevazione;
-    }
-
-    public void setDataRilevazione(Instant dataRilevazione) {
+    public ObservationtempId(Instant dataRilevazione, Integer idsensore) {
         this.dataRilevazione = dataRilevazione;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idsensore, dataRilevazione);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        ObservationtempId entity = (ObservationtempId) o;
-        return Objects.equals(this.idsensore, entity.idsensore) &&
-                Objects.equals(this.dataRilevazione, entity.dataRilevazione);
+        this.idsensore = idsensore;
     }
 }

@@ -1,49 +1,27 @@
 package com.example.neoproject.model;
 
+import lombok.Data;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class ObservationecgId implements Serializable {
     private static final long serialVersionUID = -1436930843243091930L;
+
     @Column(name = "data_rilevazione", nullable = false)
     private Instant dataRilevazione;
     @Column(name = "idsensore", nullable = false)
     private Integer idsensore;
 
-    public Integer getIdsensore() {
-        return idsensore;
-    }
+    public ObservationecgId(){}
 
-    public void setIdsensore(Integer idsensore) {
-        this.idsensore = idsensore;
-    }
-
-    public Instant getDataRilevazione() {
-        return dataRilevazione;
-    }
-
-    public void setDataRilevazione(Instant dataRilevazione) {
+    public ObservationecgId(Instant dataRilevazione, Integer idsensore) {
         this.dataRilevazione = dataRilevazione;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idsensore, dataRilevazione);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        ObservationecgId entity = (ObservationecgId) o;
-        return Objects.equals(this.idsensore, entity.idsensore) &&
-                Objects.equals(this.dataRilevazione, entity.dataRilevazione);
+        this.idsensore = idsensore;
     }
 }

@@ -1,8 +1,7 @@
 package com.example.neoproject.controller;
-import com.example.neoproject.map.dto.NeonatoGetDto;
-import com.example.neoproject.map.dto.NeonatoPostDto;
-import com.example.neoproject.map.dto.PostolettoDto;
-import com.example.neoproject.map.dto.RepartoPostDto;
+
+import com.example.neoproject.map.dtos.neonato.NeonatoGetDto;
+import com.example.neoproject.map.dtos.neonato.NeonatoPostDto;
 import com.example.neoproject.model.Neonato;
 import com.example.neoproject.service.NeonatoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +16,8 @@ public class NeonatoController {
     @Autowired
     private NeonatoService neonatoService;
 
-    @GetMapping("/neonato/sensors/{id}")
-    public ResponseEntity<NeonatoGetDto> getSensore(@PathVariable Integer id){
-        return  new ResponseEntity<>(neonatoService.findNeonatoById(id), HttpStatus.OK);
-    }
-
     @PostMapping("/neonato/add")
     public ResponseEntity <Neonato> addNeonato(@RequestBody NeonatoPostDto neonatoPostDto){
-        System.out.println(neonatoPostDto);
         return new ResponseEntity<>(neonatoService.addNeonato(neonatoPostDto),HttpStatus.CREATED);
     }
 
@@ -33,6 +26,8 @@ public class NeonatoController {
         return new ResponseEntity<>(neonatoService.findNeonatoById(id),HttpStatus.OK);
     }
 
+    /*@PutMapping
+    public ResponseEntity <Neonato> updateNeonato(@PathVariable Integer id){
 
-
+    }*/
 }

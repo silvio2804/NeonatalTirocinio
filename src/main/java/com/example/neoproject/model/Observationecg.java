@@ -2,10 +2,12 @@ package com.example.neoproject.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
+@ToString(exclude = "idsensore")
 @Entity
 @Table(name = "observationecg")
 public class Observationecg {

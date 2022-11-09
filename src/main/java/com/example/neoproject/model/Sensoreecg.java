@@ -3,6 +3,7 @@ package com.example.neoproject.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @Data
+@ToString(exclude = {"idpostoletto"})
 @Entity
 @Table(name = "sensoreecg")
 public class Sensoreecg {

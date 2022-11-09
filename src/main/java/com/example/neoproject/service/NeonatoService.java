@@ -2,11 +2,9 @@ package com.example.neoproject.service;
 
 import com.example.neoproject.exception.NeonatoNotFoundException;
 import com.example.neoproject.exception.RepartoNotFoundException;
-import com.example.neoproject.map.MapStructMapper;
-import com.example.neoproject.map.dto.NeonatoGetDto;
-import com.example.neoproject.map.dto.NeonatoPostDto;
-import com.example.neoproject.map.dto.PostolettoDto;
-import com.example.neoproject.map.dto.RepartoPostDto;
+import com.example.neoproject.map.NeonatoMapper;
+import com.example.neoproject.map.dtos.neonato.NeonatoGetDto;
+import com.example.neoproject.map.dtos.neonato.NeonatoPostDto;
 import com.example.neoproject.model.Neonato;
 import com.example.neoproject.model.Postoletto;
 import com.example.neoproject.model.Reparto;
@@ -28,7 +26,7 @@ public class NeonatoService {
     @Autowired
     private PostolettoRepository postolettoRepository;
 
-    private MapStructMapper mapper = Mappers.getMapper(MapStructMapper.class);
+    private NeonatoMapper mapper = Mappers.getMapper(NeonatoMapper.class);
 
     private Neonato neonato = new Neonato();
 
@@ -48,16 +46,5 @@ public class NeonatoService {
         p.setNomereparto(r);
         n.setIdpostoletto(p);
         return neonatoRepository.save(n);
-    }
-
-    public Neonato updateNeonato(Neonato n){
-         neonato.setNome(n.getNome());
-         neonato.setCognome(n.getCognome());
-         neonato.setDataNa(n.getDataNa());
-         neonato.setPeso(n.getPeso());
-         neonato.setEtaGestazionale(n.getEtaGestazionale());
-         neonato.setDatainizioricovero(n.getDatainizioricovero());
-         neonato.setDatafinericovero(n.getDatafinericovero());
-         return neonatoRepository.save(neonato);
     }
 }
