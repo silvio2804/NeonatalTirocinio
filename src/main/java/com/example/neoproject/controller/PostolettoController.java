@@ -6,11 +6,9 @@ import com.example.neoproject.service.PostoLettoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -25,11 +23,24 @@ public class PostolettoController {
         return new ResponseEntity<>(postoLettoService.findPostolettoById(idPostoletto), HttpStatus.OK);
     }
 
-
     @GetMapping("/postoletto/list/{nomeReparto}")
     public ResponseEntity <List<PostilettoAll>> getAllPostilettoFromReparto(@PathVariable String nomeReparto){
         return new ResponseEntity<>(postoLettoService.findAllPostiLettoByReparto(nomeReparto),HttpStatus.OK);
     }
+
+    @DeleteMapping("/postoletto/delete/{idPostoletto}")
+    @Transactional
+    public ResponseEntity<HttpStatus> deletePostoletto(@PathVariable Integer idPostoletto){
+        postoLettoService.deletePostolettoById(idPostoletto);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @DeleteMapping("/postoletto/deleteall")
+    @Transactional
+    public ResponseEntity<HttpStatus> deleteAll(){
+        postoLettoService.deleteAllPostiletto();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
    /*@PostMapping("/postoletto")
     public ResponseEntity <Postoletto> addPostoletto(@RequestBody Reparto reparto){
         return new ResponseEntity<>(postoLettoService.addPostoLetto(reparto.getId()),HttpStatus.CREATED);

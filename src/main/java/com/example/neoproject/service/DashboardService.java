@@ -49,14 +49,15 @@ public class DashboardService {
         return mapper.dashboardToDashboardGetDto(dashboardRepository.findDashboardByIdpostoletto(postoletto));
     }
 
-//aggiunta di un nuovo sensore
-    /*
-    public Dashboard updateDashboard(Integer idDashboard, Dashboard reqDashboard){
-        if(!dashboardRepository.existsById(idDashboard))
-            throw new DashboardException(idDashboard);
-        this.dashboard.setSensores(reqDashboard.getSensores());
-        this.dashboard.setIdpostoletto(reqDashboard.getIdpostoletto());
-        return dashboardRepository.save(dashboard);
-    }*/
+    public void deleteDashboardByIdPostoletto(Integer idPostoletto){
+        if(!postolettoRepository.existsById(idPostoletto))
+            throw new PostolettoNotFoundException(idPostoletto);
+        dashboard = dashboardRepository.findByIdpostoletto_Id(idPostoletto);
+        Postoletto p = postolettoRepository.findPostolettoById(idPostoletto);
+        dashboardRepository.deleteByIdpostoletto(p);
+    }
 
+    public void deleteAllDashboards(){
+        dashboardRepository.deleteAll();
+    }
 }

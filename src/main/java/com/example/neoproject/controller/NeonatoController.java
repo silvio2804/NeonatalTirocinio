@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+
 @RequestMapping("/api")
 @RestController
 public class NeonatoController {
@@ -26,8 +28,17 @@ public class NeonatoController {
         return new ResponseEntity<>(neonatoService.findNeonatoById(id),HttpStatus.OK);
     }
 
-    /*@PutMapping
-    public ResponseEntity <Neonato> updateNeonato(@PathVariable Integer id){
+    @DeleteMapping("/neonato/delete/{idNeonato}")
+    @Transactional
+    public ResponseEntity<HttpStatus> deleteNeonato(@PathVariable Integer idNeonato){
+        neonatoService.deleteNeonato(idNeonato);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
-    }*/
+    @DeleteMapping("/neonato/deleteAll")
+    @Transactional
+    public ResponseEntity<HttpStatus> deleteAllNeonatoes(){
+        neonatoService.deleteAll();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

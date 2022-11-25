@@ -1,5 +1,5 @@
 package com.example.neoproject.service;
-import com.example.neoproject.repository.SensoretempRepository;
+import com.example.neoproject.repository.SensoreTempRepository;
 import com.example.neoproject.exception.PostolettoNotFoundException;
 import com.example.neoproject.exception.SensoreNotFoundException;
 import com.example.neoproject.map.SensoreMapper;
@@ -25,7 +25,7 @@ public class SensoreService {
     @Autowired
     private PostolettoRepository postolettoRepository;
     @Autowired
-    private SensoretempRepository sensoretempRepository;
+    private SensoreTempRepository sensoretempRepository;
     @Autowired
     private ObservationecgRepository obsEcgRepository;
     @Autowired
@@ -56,7 +56,6 @@ public class SensoreService {
         return sensoretempRepository.save(s);
     }
 
-
     public Sensoreecg findSensoreEcgById(Integer id){
         if(!sensoreEcgRepository.existsById(id))
             throw new SensoreNotFoundException(id);
@@ -74,24 +73,10 @@ public class SensoreService {
             throw new PostolettoNotFoundException(idPostoletto);
         return sensoretempRepository.findSensoreByIdpostoletto(postolettoRepository.findPostolettoById(idPostoletto));
     }
-
-    /*private List<Observationtemp> randomObservationTemp() {
-        List<Observationtemp> listObs = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Observationtemp obs = new Observationtemp();
-            obs.setTemperatura(new Random().nextInt(37, 40));
-            List<Sensore> sensores = sensoreEcgRepository.findAll();
-            Sensore s = sensores.get(new Random().nextInt(0, sensores.size() - 1));
-            obs.setIdsensore(s);
-            ObservationtempId observationtempId = new ObservationtempId(); //embedded
-            observationtempId.setDataRilevazione(Instant.now());
-            observationtempId.setIdsensore(s.getId());
-            obs.setId(observationtempId);
-            listObs.add(obs);
-        }
-        return listObs;
-    }*/
-
-
-
+    public void deleteAllSensortemp(){
+        sensoretempRepository.deleteAll();
     }
+    public void deleteAllSensorecg(){
+        sensoreEcgRepository.deleteAll();
+    }
+}

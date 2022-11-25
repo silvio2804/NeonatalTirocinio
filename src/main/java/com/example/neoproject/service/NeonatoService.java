@@ -1,6 +1,7 @@
 package com.example.neoproject.service;
 
 import com.example.neoproject.exception.NeonatoNotFoundException;
+import com.example.neoproject.exception.PostolettoNotFoundException;
 import com.example.neoproject.exception.RepartoNotFoundException;
 import com.example.neoproject.map.NeonatoMapper;
 import com.example.neoproject.map.dtos.neonato.NeonatoGetDto;
@@ -46,5 +47,15 @@ public class NeonatoService {
         p.setNomereparto(r);
         n.setIdpostoletto(p);
         return neonatoRepository.save(n);
+    }
+
+    public void deleteNeonato(Integer idNeonato){
+        if(!postolettoRepository.existsById(idNeonato))
+            throw new PostolettoNotFoundException(idNeonato);
+        neonatoRepository.deleteById(idNeonato);
+    }
+
+    public void deleteAll(){
+        neonatoRepository.deleteAll();
     }
 }

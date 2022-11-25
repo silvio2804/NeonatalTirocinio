@@ -62,4 +62,12 @@ public class PostoLettoService {
         Reparto r = repartoRepository.findRepartoById(nomeReparto);
         return  mapper.postilettoAllToPostilettoAllDto((postolettoRepository.findAllByNomereparto(r)));
     }
+
+    public void deletePostolettoById(Integer id){
+        postolettoRepository.deleteById(id);
+    }
+
+   public void deleteAllPostiletto(){
+        postolettoRepository.deleteAll();
+   }
 }

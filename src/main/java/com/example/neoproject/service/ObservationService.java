@@ -1,22 +1,17 @@
 package com.example.neoproject.service;
 import com.example.neoproject.exception.PostolettoNotFoundException;
 import com.example.neoproject.exception.SensoreNotFoundException;
-import com.example.neoproject.map.dtos.observation.DateDto;
 import com.example.neoproject.model.*;
 import com.example.neoproject.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 @Service
 public class ObservationService {
-
     @Autowired
     private ObservationecgRepository observationecgRepository;
     @Autowired
@@ -24,14 +19,20 @@ public class ObservationService {
     @Autowired
     private SensoreEcgRepository sensoreEcgRepository;
     @Autowired
-    private SensoretempRepository sensoretempRepository;
+    private SensoreTempRepository sensoretempRepository;
     @Autowired
     private PostolettoRepository postolettoRepository;
 
-    public List <Observationtemp> findObservationTempByIdSensore(Sensoretemp sensore){
-        if(!sensoreEcgRepository.existsById(sensore.getId()))
-            throw new SensoreNotFoundException(sensore.getId());
-        return observationtempRepository.findObservationtempByIdsensore(sensore);
+    public List <Observationtemp> findAllObservationTempByIdSensore(Integer idSensore){
+        if(!sensoreEcgRepository.existsById(idSensore))
+            throw new SensoreNotFoundException(idSensore);
+        return observationtempRepository.findByIdsensore_Idpostoletto_Id(idSensore);
+    }
+
+    public List <Observationecg> findAllObservationEcgByIdSensore(Integer idSensore){
+        if(!sensoreEcgRepository.existsById(idSensore))
+            throw new SensoreNotFoundException(idSensore);
+        return observationecgRepository.findByIdsensore_Id(idSensore);
     }
 
     public Observationecg findLastObservationecg(Integer idPostoletto){
@@ -39,7 +40,7 @@ public class ObservationService {
             throw new PostolettoNotFoundException(idPostoletto);
         Postoletto p = postolettoRepository.findPostolettoById(idPostoletto);
         Sensoreecg s = p.getSensoreecgs().get(0);
-        return observationecgRepository.findLastObservationEcg(s);
+        return observationecgRepository.findLastObservationecg(s);
     }
 
     public Observationtemp findLastObservationtemp(Integer idPostoletto){
@@ -59,8 +60,7 @@ public class ObservationService {
         o.setId(obsId);
         o.setTemperatura(new Random().nextInt(36,41));
         o.setIdsensore(s); //necessario settarlo
-        observationtempRepository.save(o);
-        return observationtempRepository.findLastObservationTemp(s);
+        return observationtempRepository.save(o);
     }
 
     public Observationecg addObservationecg(Integer idSensore){
@@ -73,34 +73,23 @@ public class ObservationService {
         o.setBattiti(new Random().nextInt(100,191));
         o.setSaturazione(new Random().nextInt(80,101));
         o.setIdsensore(s); //necessario settarlo
-        observationecgRepository.save(o);
-        return observationecgRepository.findLastObservationEcg(s);
+        return observationecgRepository.save(o);
     }
-/*
-    public List<Observationtemp> findObservationtempByFilter(DateDto dateDto){
-        ArrayList <Instant> array = stringToInstance(dateDto);
-        System.out.println(dateDto);
-        return observationtempRepository.findById_DataRilevazioneBetween(array.get(0),array.get(1));
-    }*/
-
-   /* private static ArrayList <Instant> stringToInstance(DateDto dateDto) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        String date = "2016/08/16";
-        LocalDate localDate = LocalDate.parse(date, formatter);
-        System.out.println(localDate.toString());
-
-        /*DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(date);
-        LocalDate localInzio = LocalDate.parse(date, dateTimeFormatter);
-        System.out.println(localInzio);
-        LocalDate localFine = LocalDate.parse(dateDto.getDataFine(), dateTimeFormatter);
-        Instant instantFine = localFine.atStartOfDay(ZoneId.systemDefault()).toInstant();
-        Instant instantInzio = localInzio.atStartOfDay(ZoneId.systemDefault()).toInstant();
-        ArrayList <Instant> array = new ArrayList<>();
-        array.add(instantInzio);
-        array.add(instantFine);
-        return array;
-        return new ArrayList<>();
-    }*/
+    public void deleteObservationtempByIdSensore(Integer idSensoretemp){
+        if(!sensoretempRepository.existsById(idSensoretemp))
+            throw new SensoreNotFoundException(idSensoretemp);
+        Sensoretemp s = sensoretempRepository.findSensoreById(idSensoretemp);
+        observationtempRepository.deleteByIdsensore(s);
+    }
+    public void deleteAlltemps(){
+        observationtempRepository.deleteAll();
+    }
+    public void deleteObservationecgByIdSensore(Integer observationecg){
+        observationecgRepository.deleteById(observationecg);
+    }
+    public void deleteAllecgs(){
+        observationecgRepository.deleteAll();
+    }
 }
 
 

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -39,7 +40,6 @@ public class SensoreController {
     @GetMapping("/sensoretemp/lastvalue/{idpostoletto}")
     public ResponseEntity<Observationtemp> getLastObservationEcg(@PathVariable Integer idpostoletto){
         return new ResponseEntity<>(observationService.findLastObservationtemp(idpostoletto),HttpStatus.OK);
-
     }
 
     @GetMapping("/sensoreecg/lastvalue/{idpostoletto}")
@@ -55,6 +55,20 @@ public class SensoreController {
     @PostMapping("/sensoretemp/add")
     public ResponseEntity <Sensoretemp> addSensoreTemp(@RequestBody SensoreTempPostDto sensoreTempPostDto){
         return new ResponseEntity<>(sensoreService.addSensoreTemp(sensoreTempPostDto),HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/sensoretemp/deleteSensoresTemp")
+    @Transactional
+    public ResponseEntity<HttpStatus> deleteAllSensortemp(){
+        sensoreService.deleteAllSensortemp();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/sensorecg/deleteSensoresEcg")
+    @Transactional
+    public ResponseEntity<HttpStatus> deleteAllSensorecg(){
+        sensoreService.deleteAllSensorecg();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

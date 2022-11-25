@@ -9,6 +9,5 @@ import java.util.List;
 public interface SensoreEcgRepository extends JpaRepository<Sensoreecg, Integer> {
 
     List <Sensoreecg> findSensoreByIdpostoletto(Postoletto postoletto); //dammi tutti i sensori relativi al letto
-
     Sensoreecg findSensoreById(Integer id );
 }

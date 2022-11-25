@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+
 @RequestMapping("/api")
 @RestController
 public class DashboardController {
@@ -27,10 +29,17 @@ public class DashboardController {
     public ResponseEntity<Integer> createDashboard(@RequestBody DashboardPostDto dashboardPostDto){
         return new ResponseEntity(dashboardService.createDashboard(dashboardPostDto),HttpStatus.CREATED);
     }
+    @DeleteMapping("/dashboard/delete/{idPostoletto}")
+    @Transactional
+    public ResponseEntity<HttpStatus> deleteDashboard(@PathVariable Integer idPostoletto){
+       dashboardService.deleteDashboardByIdPostoletto(idPostoletto);
+       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @DeleteMapping("/dashboard/deleteAll")
+    @Transactional
+    public ResponseEntity<HttpStatus> deleteAllDashboards(){
+        dashboardService.deleteAllDashboards();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-    //da fare
-    /*@PutMapping("/dashboard/{idPostoletto}")
-    public ResponseEntity<Dashboard> updateDashboard(@PathVariable Integer idPostoletto, @RequestBody Dashboard dashboard){
-        return new ResponseEntity<>(dashboardService.updateDashboard(idPostoletto, dashboard),HttpStatus.OK);
-    }*/
+    }
 }
