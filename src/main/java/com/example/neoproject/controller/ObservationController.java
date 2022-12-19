@@ -22,7 +22,6 @@ public class ObservationController {
     public ResponseEntity<Observationecg> saveObservationecg(@PathVariable Integer sensorId){
         return new ResponseEntity<>(observationService.addObservationecg(sensorId), HttpStatus.OK);
     }
-
     //ok
     @PostMapping("/Observationtemp/{sensorId}")
     public ResponseEntity<Observationtemp> saveObservationtemp(@PathVariable Integer sensorId){
@@ -31,6 +30,16 @@ public class ObservationController {
     @GetMapping("/observationtemp/list/{sensorId}")
     public ResponseEntity<List<Observationtemp>> getAllObservationtemp(@PathVariable Integer sensorId){
         return new ResponseEntity<>(observationService.findAllObservationTempByIdSensore(sensorId),HttpStatus.OK);
+    }
+
+    @GetMapping("/observationtemp/listByNeonato/{idNeonato}")
+    public ResponseEntity<List<Observationtemp>> getAllObservationtempByIdNeonato(@PathVariable Integer idNeonato){
+        return new ResponseEntity<>(observationService.findAllObservationTempByIdNeonato(idNeonato),HttpStatus.OK);
+    }
+
+    @GetMapping("/observationtemp/listObs/{id}")
+    public ResponseEntity<List<Observationtemp>> getAllObsTemp(@PathVariable Integer id){
+        return new ResponseEntity<>(observationService.findAllObservationTempByIdObservation(id),HttpStatus.OK);
     }
 
     @GetMapping("/observationecg/list/{sensorId}")

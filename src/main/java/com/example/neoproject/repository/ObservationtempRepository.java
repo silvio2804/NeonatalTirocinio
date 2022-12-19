@@ -14,14 +14,15 @@ public interface ObservationtempRepository extends JpaRepository<Observationtemp
 
     List<Observationtemp> findObservationtempByIdsensore(Integer idSensore);
     List<Observationtemp> findByIdsensore_Idpostoletto_Id(Integer id);
-
-    @Query(value = "SELECT o FROM Observationtemp o WHERE o.idsensore= ?1 " +
-            "AND o.id.dataRilevazione = (SELECT max(o.id.dataRilevazione) FROM Observationtemp o)")
+    @Query(value = "SELECT o FROM Observationtemp o WHERE o.idsensore= ?1 " + "AND o.id.dataRilevazione = (SELECT max(o.id.dataRilevazione) FROM Observationtemp o)")
     Observationtemp findLastObservationTemp(Sensoretemp sensoretemp);
+    List<Observationtemp> findById_DataRilevazioneBetween(Instant dataRilevazioneStart, Instant dataRilevazioneEnd);
+    void deleteByIdsensore(Sensoretemp idsensore);
+
+    List< Observationtemp> findObservationtempByIdObservationtemp(Integer idObservationtemp);
+
+    List<Observationtemp> findByNeonato_Id(Integer id);
 
     /*@Query(value = "SELECT Observationtemp FROM Observationtemp o WHERE o.id.dataRilevazione BETWEEN :startdate AND :endate")
     List<Observationtemp> findByFilters(@Param("startdate") String dataInizio, @Param("endate") String dataFine);*/
-    List<Observationtemp> findById_DataRilevazioneBetween(Instant dataRilevazioneStart, Instant dataRilevazioneEnd);
-
-    void deleteByIdsensore(Sensoretemp idsensore);
 }

@@ -1,6 +1,7 @@
 package com.example.neoproject.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,7 +37,7 @@ public class Neonato {
     @Column(name = "eta_gestazionale", nullable = false)
     private Integer etaGestazionale;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.MERGE)
     @JoinColumn(name = "idpostoletto", nullable = false)
     @JsonBackReference
     private Postoletto idpostoletto;
@@ -53,4 +54,9 @@ public class Neonato {
             inverseJoinColumns = @JoinColumn(name = "nomepatologia"))
     private List<Patologia> patologias = new ArrayList<>();
 
+    /*
+    @OneToMany(mappedBy = "neonato", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Observationtemp> observationtemps = new ArrayList<>();
+*/
 }

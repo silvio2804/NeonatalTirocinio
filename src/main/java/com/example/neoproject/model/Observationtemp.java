@@ -18,6 +18,14 @@ public class Observationtemp {
     @JsonBackReference
     private Sensoretemp idsensore;
 
+    @Column(name ="id_observation_temp", nullable = false)
+    private Integer idObservationtemp;
+
     @Column(name = "temperatura", nullable = false)
     private Integer temperatura;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false) //molte observation a 1 neonato
+    @JoinColumn(name = "neonato_fk", nullable = false)
+    @JsonBackReference
+    private Neonato neonato;
 }

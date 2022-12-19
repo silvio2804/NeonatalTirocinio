@@ -1,14 +1,11 @@
 package com.example.neoproject.model;
 
 import lombok.Data;
-import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Entity;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Objects;
 
 @Data
 @Embeddable

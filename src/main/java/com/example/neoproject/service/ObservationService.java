@@ -24,7 +24,7 @@ public class ObservationService {
     private PostolettoRepository postolettoRepository;
 
     public List <Observationtemp> findAllObservationTempByIdSensore(Integer idSensore){
-        if(!sensoreEcgRepository.existsById(idSensore))
+        if(!sensoretempRepository.existsById(idSensore))
             throw new SensoreNotFoundException(idSensore);
         return observationtempRepository.findByIdsensore_Idpostoletto_Id(idSensore);
     }
@@ -33,6 +33,14 @@ public class ObservationService {
         if(!sensoreEcgRepository.existsById(idSensore))
             throw new SensoreNotFoundException(idSensore);
         return observationecgRepository.findByIdsensore_Id(idSensore);
+    }
+
+    public List <Observationtemp> findAllObservationTempByIdObservation(Integer id){
+        return observationtempRepository.findObservationtempByIdObservationtemp(id);
+    }
+
+    public List <Observationtemp> findAllObservationTempByIdNeonato(Integer id){
+        return observationtempRepository.findByNeonato_Id(id);
     }
 
     public Observationecg findLastObservationecg(Integer idPostoletto){
@@ -84,9 +92,11 @@ public class ObservationService {
     public void deleteAlltemps(){
         observationtempRepository.deleteAll();
     }
+
     public void deleteObservationecgByIdSensore(Integer observationecg){
         observationecgRepository.deleteById(observationecg);
     }
+
     public void deleteAllecgs(){
         observationecgRepository.deleteAll();
     }
